@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Form</title>
+        <style>
+            body{
+               background:url(image1.jpg) no-repeat ;
+               background-size: cover;
+               color:white; 
+               font-size: 20px;
+                margin: 15px 0;
+            }
+            .Registration_form
+            {
+                position:absolute;
+                top:50%;
+                left:50%;
+                transform: translate(-50%,-50%);
+                width: 400px;
+            }
+            .Registration_form input{
+                font-size: 15px;
+                padding: 15px 10px;
+                width :100%;
+                border:0;
+                border-radius: 5px;
+                outline: none;
+            }
+            .Registration_form button{
+                font-size: 15px;
+                font-weight:bold;
+                margin: 12px 0;
+                padding: 10px 12px;
+                width:30% ;
+                border:0;
+                border-radius: 5px;
+                background-color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="Registration_form">
+        <form name="form1" onsubmit="return check()" >
+            First Name:<br>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required><span id = "warning1" style="color:red"> </span>
+            <br>
+            Email ID:<br>
+            <input type="text" id="mail" name="mail" placeholder="Enter your mail" required><span id = "warning2" style="color:red"> </span>
+            <br>
+            Phone No:<br>
+            <input type="number" id="phone" name="phone" placeholder="Enter phone number" required><span id = "warning3" style="color:red"> </span>
+            <br>
+            Password:<br>
+            <input type="password" id="pass" name="pass" placeholder="Enter password" ><span id = "warning4" style="color:red"> </span>
+            <br>
+            Confirm password:<br>
+            <input type="password" id="cpass" name="cpass" placeholder="Enter password again"><span id = "warning5" style="color:red"> </span>
+            <br>
+            <button type="submit" value="submit">Submit</button>
+            <button type="reset" value="reset">Reset</button>
+        </form>
+        </div>
+        <script>
+            function clearerror()
+            {
+                error=document.getElementsByTagName("span");
+                for(let i=0;i<error.length;i++)
+                error[i].innerText=" ";
+
+            }
+            function check()
+            {
+                    let rvalue=true;
+                    // clear the value of pervious errors
+                    clearerror();
+                    let name=document.forms["form1"]["name"].value;
+                    let mail=document.forms["form1"]["mail"].value;
+                    let phone=document.forms["form1"]["phone"].value;
+                    let pass=document.forms["form1"]["pass"].value;
+                    let cpass=document.forms["form1"]["cpass"].value;
+
+                    //check if for the length of the name and it should not be digit
+                    if((name.length<4 || name.length>15)||!isNaN(name))
+                    {
+                    document.getElementById("warning1").innerText="**Please enter valid name";
+                    rvalue=false;
+
+                    }
+
+                    //check for the length of the phone number
+                    if(phone.length!==10) 
+                    {
+                    document.getElementById("warning3").innerText="**Please enter valid phone number";
+                    rvalue=false;
+                    }
+
+                    //check for Email
+                    if(mail.includes("@")===false||mail.length>30)
+                    {
+                    document.getElementById("warning2").innerText="**Please enter valid mail";
+                    rvalue=false;
+                    }
+                    //check if password and confirm password are same
+                    if(pass!==cpass)
+                    {
+                    document.getElementById("warning5").innerText= "**Password and confirm password should be same";
+                    rvalue=false;
+                    }
+
+                    //check if password contain upper case, special symbol and digit
+                    var capital_valid=false;
+                    var special_valid=false;
+                    var digit_valid=false;
+                    for(var i=0;i<pass.length;i++)
+                    {
+                         var temp=pass.charCodeAt(i);
+                       
+                         if(temp>64&&temp<91)
+                             capital_valid=true;
+                         if((temp>31&&temp<48)||temp>57&&temp<65)
+                             special_valid=true;
+                         if(temp>47&&temp<58)
+                             digit_valid=true;
+                            
+                    }
+                    if(capital_valid==false||special_valid==false||digit_valid==false)
+                    {
+                    document.getElementById("warning4").innerText="**Password should contain upper case digit and special character ";
+                    rvalue=false;
+                    }
+
+                    //check for the minimum length of the password
+                    if(pass.length<8)
+                    {
+                    document.getElementById("warning4").innerText="**Password must be of atleast 8 characters ";
+                    rvalue=false;
+                    }
+
+                    //if any field is wrong form won't be submmited
+                    if(rvalue==false)
+                    return false;
+                    else
+                    return true;
+
+            }
+        </script>
+    </body>
+</html>
